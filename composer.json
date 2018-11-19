@@ -1,0 +1,22 @@
+{
+    "name": "towersystems/import",
+    "type": "library",
+    "description": "Create Resource Imports for your application",
+    "authors": [
+        {
+            "name": "kane",
+            "email": "kane.borthwick@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.1",
+        "towersystems/resource": "^1.0",
+        "doctrine/doctrine-module": "^2.1",
+        "zendframework/zend-stdlib": "^3.1"
+    },
+    "autoload": {
+        "psr-4": { "Towersystems\\Import\\": "" }
+    }
+}
