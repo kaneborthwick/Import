@@ -59,6 +59,10 @@ class Importer implements ImporterInterface {
 			$this->importData($index, $data);
 		}
 
+		if ($this->batchCount) {
+			$this->objectManager->flush();
+		}
+
 		$this->result->stop();
 
 		return $this->result;
