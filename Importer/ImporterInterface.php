@@ -5,19 +5,19 @@ namespace Towersystems\Import\Importer;
 interface ImporterInterface {
 
 	/**
-	 * @param  $data
+	 * @param  $dataset
 	 *
 	 * @return ImporterResultInterface
 	 */
-	public function import($data): ImporterResultInterface;
+	public function import($dataset): ImporterResultInterface;
 
 	/**
 	 * [importData description]
 	 *
-	 * @param  int    $i   [description]
-	 * @param  array  $row [description]
+	 * @param  $index [description]
+	 * @param  $data  [description]
 	 *
-	 * @return bool      [description]
+	 * @return bool   [description]
 	 */
-	public function importData(int $i, array $row): bool;
+	public function importData($index, $data): bool;
 }
