@@ -12,12 +12,12 @@ class ImporterResult implements ImporterResultInterface {
 	private $stopwatch;
 
 	/**
-	 * @var int[]
+	 * @var array
 	 */
 	private $success = [];
 
 	/**
-	 * @var int[]
+	 * @var array
 	 */
 	private $failed = [];
 
@@ -48,30 +48,28 @@ class ImporterResult implements ImporterResultInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function success(int $rowNum): void{
-		$this->success[] = $rowNum;
+	public function success($index): void{
+		$this->success[] = $index;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getSuccessRows(): array
-	{
+	public function failed($index, $errorMsg = ""): void{
+		$this->failed[] = ['index' => $index, 'error' => $errorMsg];
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getSuccessRows(): array{
 		return $this->success;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function failed(int $rowNum, $errorMsg = ""): void{
-		$this->failed[] = ['row' => $rowNum, 'error' => $errorMsg];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getFailedRows(): array
-	{
+	public function getFailedRows(): array{
 		return $this->failed;
 	}
 

@@ -18,17 +18,15 @@ interface ImporterResultInterface {
 
 	/**
 	 * [success description]
-	 * @param  int    $rowNum [description]
-	 * @return void         [description]
+	 * @param $index
 	 */
-	public function success(int $rowNum): void;
+	public function success($index): void;
 
 	/**
 	 * [failed description]
-	 * @param  int    $rowNum [description]
-	 * @return void         [description]
+	 * @param $index
 	 */
-	public function failed(int $rowNum, $errorMsg = ""): void;
+	public function failed($index, $errorMsg = ""): void;
 
 	/**
 	 * [getDuration description]

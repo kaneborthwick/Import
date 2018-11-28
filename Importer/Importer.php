@@ -9,11 +9,6 @@ use Towersystems\Import\Processor\ResourceProcessorInterface;
 class Importer implements ImporterInterface {
 
 	/**
-	 * @var ResourceProcessorInterface
-	 */
-	protected $resourceProcessor;
-
-	/**
 	 * @var ImporterResultInterface
 	 */
 	protected $result;
@@ -24,6 +19,11 @@ class Importer implements ImporterInterface {
 	protected $objectManager;
 
 	/**
+	 * @var ResourceProcessorInterface
+	 */
+	protected $resourceProcessor;
+
+	/**
 	 * @var integer
 	 */
 	protected $batchCount = 0;
@@ -31,15 +31,15 @@ class Importer implements ImporterInterface {
 	/**
 	 * [__construct description]
 	 *
-	 * @param ResourceProcessorInterface $resourceProcessor [description]
 	 * @param ImporterResultInterface    $result            [description]
 	 * @param ObjectManager              $objectManager     [description]
+	 * @param ResourceProcessorInterface $resourceProcessor [description]
 	 * @param int                        $batchSize         [description]
 	 */
 	public function __construct(
-		ResourceProcessorInterface $resourceProcessor,
 		ImporterResultInterface $result,
 		ObjectManager $objectManager,
+		ResourceProcessorInterface $resourceProcessor,
 		int $batchSize = 25
 	) {
 		$this->resourceProcessor = $resourceProcessor;
@@ -51,34 +51,33 @@ class Importer implements ImporterInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function import($fileName): ImporterResultInterface{
+	public function import($dataset): ImporterResultInterface{
 
 		$this->result->start();
 
-		if ($this->batchCount) {
-			$this->objectManager->flush();
+		foreach ($dataset as $index => $data) {
+			$this->importData($index, $data);
 		}
 
 		$this->result->stop();
 
 		return $this->result;
-
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function importData(int $i, array $row): bool {
+	public function importData($index, $data): bool {
 		try {
-			$this->resourceProcessor->process($row);
-			$this->result->success($i);
+			$this->resourceProcessor->process($data);
+			$this->result->success($index);
 			++$this->batchCount;
 			if ($this->batchSize && $this->batchCount === $this->batchSize) {
 				$this->objectManager->flush();
 				$this->batchCount = 0;
 			}
 		} catch (ImporterException $e) {
-			$this->result->failed($i, $e->getMessage());
+			$this->result->failed($index, $e->getMessage());
 			return false;
 		}
 
