@@ -12,7 +12,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.1",
-        "towersystems/resource": "^1.0",
+        "towersystems/resource": "dev-master@dev",
         "doctrine/doctrine-module": "^2.1",
         "zendframework/zend-stdlib": "^3.1"
     },
